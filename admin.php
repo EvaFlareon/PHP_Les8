@@ -52,7 +52,7 @@ if (isset($_FILES['userfile']['name']) && !empty($_FILES['userfile']['name'])) {
 		}
 		move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile.date('YmdHis').$_FILES['userfile']['name']);
 		header('Location: list.php');
-		echo "<p style='color:green'>Файл ".$_FILES['userfile']['name']." с тестами загружен</p>";
+		exit;
 	} else {
 		echo "<p style='color:red'>Ошибка: Файл ".$_FILES['userfile']['name']." с тестами не загружен</p>";
 	}
