@@ -10,7 +10,20 @@ if (is_string($_SESSION['user'])) {
 
 $content = $_GET['filename'];
 
-if (is_null($content)) {
+foreach (glob("files/*.json") as $filename) {
+	if (is_null($content)) {
+		if ($content == $filename) {
+			$test = file_get_contents($filename);
+			$result = json_decode($test, true);
+			break;
+		} else {
+			$result = 0;
+			continue;
+		}
+	}
+}
+
+if (is_null($content) || $result === 0) {
 	header('HTTP/1.1 404 Not Found');
 	echo 'Тест не выбран'."<br>";
 	echo "<a href='list.php'>Вернуться к выбору тестов</a>";
@@ -22,16 +35,6 @@ if ($_GET['delete']) {
 	header('Location: list.php');
 }
 
-foreach (glob("files/*.json") as $filename) {
-	if ($content == $filename) {
-		$test = file_get_contents($filename);
-		$result = json_decode($test, true);
-		break;
-	} else {
-		continue;
-	}
-}
-
 if ($_POST['complete']) {
 	
 	$user_answer = [];
@@ -40,12 +43,12 @@ if ($_POST['complete']) {
 	$p = 0;
 
 	for ($i = 1; $i < 6; $i ++) {
-		$user_answer[$i] = $_POST["$i"];
+		$user_answer[$i] = $_POST[$i];
 		if ($user_answer[$i] === $result[$i]['answer']) {
 			$t += 1;
 			$f += 0;
 			$p += 0;
-		} else if ($_POST["$i"] == False) {
+		} else if ($_POST[$i] == False) {
 			$t += 0;
 			$f += 0;
 			$p += 1;
