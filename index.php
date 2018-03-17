@@ -24,7 +24,7 @@ if (!empty($_POST)) {
     if ($_POST['login'] === '' && $_POST['password'] === '' && $_POST['guest']) {
         $_SESSION['user'] = $_POST['guest'];
         header('Location: list.php');
-    } 
+    }
 }
 
 ?>
@@ -38,9 +38,9 @@ if (!empty($_POST)) {
 <body>
     <h1>Авторизация</h1>
     <ul>
-        <?php foreach ($errors as $error): ?>
+        <?php foreach ($errors as $error) { ?>
         <li><?= $error ?></li>
-        <? endforeach; ?>
+        <? } ?>
     </ul>
     <form action="" method="POST">
         <label>Логин</label>
